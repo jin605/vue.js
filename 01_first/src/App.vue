@@ -9,7 +9,8 @@
 </template>
 
 <script>
-  import Directive from './components/Directive1.vue';
+  // import Directive from './components/Directive1.vue';
+  import Directive from './components/Directive2.vue';
 
   export default {
     name: "App",
