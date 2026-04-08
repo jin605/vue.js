@@ -4,18 +4,22 @@
 
     <p>{{ message }}</p>
 
-      <Directive></Directive>
+    <!-- <Directive/> -->
+    <Options/>
+
   </div>
 </template>
 
 <script>
   // import Directive from './components/Directive1.vue';
   import Directive from './components/Directive2.vue';
+  import Options from './components/Options.vue';
 
   export default {
-    name: "App",
+    name: 'App',
     components: {
-      Directive // Directive: Directive
+      Directive, // Directive: Directive
+      Options // Options: Options
     },
     data() {
 

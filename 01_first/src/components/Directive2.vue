@@ -66,11 +66,14 @@
                 <th>인덱스</th>
                 <th>속성명</th>
                 <th>속성값</th>
+                <th>속성값</th>
             </tr>
             <tr v-for="value, key, index) in user" :key="key">
                 <td v-text="index"></td>
                 <td v-text="key"></td>
                 <td v-text="value"></td>
+                <td v-text="value"></td>
+
             </tr>
 
         </table>
