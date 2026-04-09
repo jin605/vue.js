@@ -19,7 +19,7 @@
 
         <br>
         <!-- <template> 요소는 렌더링에 포함되지 않지만 요소들을 그룹으로 묶어주기 위한 용도로 사용한다. -->
-        <template v-if="score>0 && score<=100", >
+        <template v-if="score > 0 && score <= 100">
             점수에 해당하는 등급은
             <span v-if="score >= 90">A</span>
             <span v-else-if="score >= 80">B</span>
@@ -68,7 +68,7 @@
                 <th>속성값</th>
                 <th>속성값</th>
             </tr>
-            <tr v-for="value, key, index) in user" :key="key">
+            <tr v-for="(value, key, index) in user" :key="key">
                 <td v-text="index"></td>
                 <td v-text="key"></td>
                 <td v-text="value"></td>

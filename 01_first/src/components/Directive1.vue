@@ -35,8 +35,11 @@
 
             <label>
                 <!-- <input type="checkbox" name="agree" v-model="agree"> 위 내용에 동의합니다. -->
-                <input type="checkbox" name="agree" v-model="agree" true-value="Y" false-value="N"> 위 내용에 동의합니다.
+                <input type="checkbox" name="agree" v-model="agree" true-value="Y" false-value="N"> 위 내용에 동의니다.
             </label>
+
+            
+
 
             <select name="contry" v-model="country">
                 <option value="">국가를 선택해주세요.</option>

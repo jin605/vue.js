@@ -5,7 +5,9 @@
     <p>{{ message }}</p>
 
     <!-- <Directive/> -->
-    <Options/>
+    <!-- <Options/> -->
+    <!-- <Events/> -->
+    <Styles/>
 
   </div>
 </template>
@@ -14,12 +16,16 @@
   // import Directive from './components/Directive1.vue';
   import Directive from './components/Directive2.vue';
   import Options from './components/Options.vue';
+  import Events from './components/Events.vue';
+  import Styles from './components/Styles.vue';
 
   export default {
     name: 'App',
     components: {
       Directive, // Directive: Directive
-      Options // Options: Options
+      Options, // Options: Options
+      Events,
+      Styles
     },
     data() {
 
