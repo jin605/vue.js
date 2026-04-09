@@ -21,7 +21,7 @@
     <ul>
       <!-- 슬롯 데스트 -->
       <!-- 
-      <SlotItem v-for="item in slotItems" :key="itemid"
+      <SlotItem v-for="item in slotItems" :key="item.id"
          :id="item.id" :checked="item.checked" @slot-change="slotChange">
          자식 컴포넌트의 <slot></slot> 영역에 출력된다. 
          <span v-if="item.checked" v-text="item.label"></span>
@@ -30,7 +30,7 @@
       -->
 
       <!-- 명명된 슬롯 데스트 -->
-      <SlotItem v-for="item in slotItems" :key="itemid" 
+      <SlotItem v-for="item in slotItems" :key="item.id" 
           :id="item.id" :checked="item.checked" @slot-change="slotChange">
 
           <!-- 어떤 슬롯에 랜더링할 템플릿인지 이름으로 지정한다. -->

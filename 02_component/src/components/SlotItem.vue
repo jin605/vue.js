@@ -26,7 +26,7 @@
 export default {
     name: 'SlotItem',
     props: ['id', 'checked'],
-    emit: ['slot-change']
+    emits: ['slot-change']
 
 }
 </script>
