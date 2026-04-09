@@ -23,6 +23,7 @@ import {ref} from 'vue';
 
 export default {
     setup () {
+        // 기본 타입의 데이터를 반응성을 가진 데이터로 생성할 때는 ref()를 사용한다.
         const num1 = ref(10);
         const num2 = ref(20);
         const result = ref(30);
