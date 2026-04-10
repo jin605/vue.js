@@ -11,11 +11,20 @@
             <span class="fs-4">University</span>
         </a>
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Features</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Pricing</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">FAQs</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+            <!-- 화면 전환에 필요한 링크를 생성한다. -->
+            <li class="nav-item">
+                <!-- 명명된 라우터의 경우 v-bind를 이용해서 to 속성에 문자열이 아닌 객체를 바인딩해야 한다. -->
+                <RouterLink class="nav-link" :to="{name: 'home'}">Home</RouterLink>
+            </li>
+            <li class="nav-item">
+                <RouterLink class="nav-link" :to="{name: 'departments'}">학과 목록 조회</RouterLink>
+            </li>
+            <li class="nav-item">
+                <RouterLink class="nav-link" :to="{name: 'departments/no', params: {no: '033'}}">학과 상세 조회(beta)</RouterLink>
+            </li>
+            <li class="nav-item">
+                <RouterLink class="nav-link" :to="{name: 'departments/add'}">학과 등록</RouterLink>
+            </li>
         </ul>
         <div class="col-md-3 text-end">
             <button type="button" class="btn btn-outline-secondary" @click="logout">Logout</button>
@@ -27,6 +36,9 @@
 
 </script>
 
-<style lang="scss" scoped>
-
+<style scoped>
+    /* 현재 URL과 정확하게 일치하는 경우에만 스타일이 적용된다. */
+    .router-link-exact-active {
+        color: rgb(108,117,125)
+    }
 </style>
