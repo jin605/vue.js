@@ -1,3 +1,4 @@
+import AuthLayout from '@/layout/AuthLayout.vue'
 import BaseLayout from '@/layout/BaseLayout.vue'
 import NotFound from '@/views/common/NotFound.vue'
 import AddDepartment from '@/views/department/AddDepartment.vue'
@@ -23,7 +24,7 @@ const router = createRouter({
   // ],
   // 중첩된 라우트
   // RouterView에 의해서 랜더링된 컴포넌트가 다시 RouterView를 이용헤서 자식 라우트에 매칭된 컴포넌트를 랜더링한다.
-  
+
   routes: [
     {
       name: 'main',
@@ -36,6 +37,7 @@ const router = createRouter({
         {name: 'departments/add', path: 'departments/add', component: AddDepartment}
       ]
     },
+    {name: 'auth', path:'/auth', component:AuthLayout},
     // 404 라운트
     {name: 'notfound', path: '/:paths(.*)*', component:NotFound}
 
