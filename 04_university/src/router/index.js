@@ -5,6 +5,7 @@ import AddDepartment from '@/views/department/AddDepartment.vue'
 import DepartmentDetail from '@/views/department/DepartmentDetail.vue'
 import Departments from '@/views/department/Departments.vue'
 import Home from '@/views/Home.vue'
+import Login from '@/views/auth/Login.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 
 // router 객체를 생성하기 위해서는 vue-router에서 제공하는 createRouter 함수를 사용한다.
@@ -37,9 +38,23 @@ const router = createRouter({
         {name: 'departments/add', path: 'departments/add', component: AddDepartment}
       ]
     },
-    {name: 'auth', path:'/auth', component:AuthLayout},
+    {
+      name: 'auth', 
+      path: '/auth', 
+      component:AuthLayout, 
+      children: 
+      [{
+        name: 'login', 
+        path: 'login', 
+        component:Login
+      }]},
+
     // 404 라운트
-    {name: 'notfound', path: '/:paths(.*)*', component:NotFound}
+    {
+      name: 'notfound', 
+      path: '/:paths(.*)*', 
+      component:NotFound
+    }
 
   ],
 })
