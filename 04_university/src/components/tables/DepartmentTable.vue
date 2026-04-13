@@ -11,12 +11,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>001</td>
-                <td>aaa</td>
-                <td>bbb</td>
-                <td>ccc</td>
-                <td>ddd</td>
+            <tr v-for="department in departments" :key="department.no">
+                <td>{{ department.no }}</td>
+                <td>{{ department.name }}</td>
+                <td>{{ department.category }}</td>
+                <td>{{ department.openYn }}</td>
+                <td>{{ department.capacity }}</td>
                 <td>
                     <button type="button" class="btn btn-outline-danger">삭제</button>
                 </td>
@@ -26,9 +26,14 @@
 </template>
 
 <script setup>
-
+    const props = defineProps({
+        departments: {
+            type: Array,
+            required: true
+        }
+    });
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>
