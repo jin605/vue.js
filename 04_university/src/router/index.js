@@ -7,6 +7,7 @@ import Departments from '@/views/department/Departments.vue'
 import Home from '@/views/Home.vue'
 import Login from '@/views/auth/Login.vue'
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/authStore'
 
 // router 객체를 생성하기 위해서는 vue-router에서 제공하는 createRouter 함수를 사용한다.
 const router = createRouter({
@@ -58,5 +59,32 @@ const router = createRouter({
 
   ],
 })
+
+// 네비게이션 가드(Navigation Guard)
+//  - 라이팅이 일어날 때 프로그래밍 방식으로 네이게이션을 안전하게 보호하는 기능을 수행한다.
+//  - beforeEach에 전달하는 인자 중 to는 이동하려는 경로를 나타내고 from은 이동 전 현재 경로 정보이다.
+router.beforeEach((to, from) => {
+  //  - 라우팅 경로 변경, 새로고침 시에 리프레시 토큰으로 액세스 토큰을 재발급 받는다.
+  const authStore = useAuthStore()
+
+  try{
+
+    // 액세스 토큰이 없는 경우 리프레시토큰으로 엑세스 토큰 재발급
+    if (authStore.tokenInfo.accessToken === '') {
+      await authStore.refreshAccessToken();
+    }
+    console.log(authStore.tokenInfo.accessToken);
+    
+    // 인증된 사용자가 로그인 페이지 요청 시 홈으로 리다이렉트
+    if (to.name === 'login' && authStore.tokenInfo.accessToken) {
+      return {name: 'home'}
+    }
+  } catch(error) {
+    // 액세스 토큰 재발급 중에 에러 발생시 로그인 페이지로 리다이렉트
+    if (to.name !== 'login') {
+      return {name: 'login'}
+    }
+  }
+});
 
 export default router
