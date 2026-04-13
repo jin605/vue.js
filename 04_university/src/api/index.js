@@ -22,6 +22,11 @@ apiClient.interceptors.request.use(
 
     // 모든 요청에 JWT 토큰을 헤더에 추가하도록 인터셉터를 구현한다.
     (config) => {
+        if (config._skipInterceptor) {
+            return config;
+        }
+
+        // 피니아 스토어에서 accessToken 가져온다.
         const authStore = useAuthStore();
         const accessToken = authStore.tokenInfo.accessToken;
 

@@ -21,7 +21,8 @@ export const useAuthStore = defineStore('auth', () =>{
             formData,
             {
                 // 브라우저가 서버로 요청을 보낼 때 쿠키, 인증 헤더 등을 함께 포함하도록 허용하는 설정
-                withCredentials: true
+                withCredentials: true,
+                _skipInterceptor: true
             }
         );
 
@@ -41,7 +42,8 @@ export const useAuthStore = defineStore('auth', () =>{
             '/api/v1/auth/refresh',
             null,
             {
-                withCredentials: true
+                withCredentials: true,
+                _skipInterceptor: true
             }
         );
 
@@ -62,12 +64,7 @@ export const useAuthStore = defineStore('auth', () =>{
 
         if (response.status === 204) {
             // 사용자 정보 초기화
-            tokenInfo.accessToken = '';
-            tokenInfo.type = '';
-            tokenInfo.username =  '';
-            tokenInfo.authorities =  [];
-            tokenInfo.issuedAt = 0;
-            tokenInfo.expiredAt = 0;
+            clearState();
 
         }
 
@@ -75,6 +72,17 @@ export const useAuthStore = defineStore('auth', () =>{
         
     };
 
-    return {tokenInfo, login, refreshAccessToken, logout};
+    const clearState = () => {
+        // 사용자 정보 초기화
+        tokenInfo.accessToken = '';
+        tokenInfo.type = '';
+        tokenInfo.username =  '';
+        tokenInfo.authorities =  [];
+        tokenInfo.issuedAt = 0;
+        tokenInfo.expiredAt = 0;
+    }
+
+    return {tokenInfo, login, refreshAccessToken, logout, clearState};
+    
 });
 
