@@ -28,13 +28,53 @@ export const useAuthStore = defineStore('auth', () =>{
         console.log(response);
 
         if (response.status === 200) {
-            // TokenInfo 속성을 response.data.items[0]의 속성으로 변경한다.
+            // TokenInfo 속성을 response.data.item[0]의 속성으로 변경한다.
             Object.assign(tokenInfo, response.data.item[0]);
         }
 
         return response.data;
     };
 
-    return {tokenInfo, login};
+    // 액세스 토큰 재발급
+    const refreshAccessToken = async() => {
+        const response = await apiClient.post(
+            '/api/v1/auth/refresh',
+            null,
+            {
+                withCredentials: true
+            }
+        );
+
+        if (response.status === 200) {
+            Object.assign(tokenInfo, response.data.item[0]);
+            
+        }
+    };
+
+    const logout = async () => {
+        const response = await apiClient.post(
+            '/api/v1/auth/logout',
+            null,
+            {
+                withCredentials: true
+            }
+        );
+
+        if (response.status === 204) {
+            // 사용자 정보 초기화
+            tokenInfo.accessToken = '';
+            tokenInfo.type = '';
+            tokenInfo.username =  '';
+            tokenInfo.authorities =  [];
+            tokenInfo.issuedAt = 0;
+            tokenInfo.expiredAt = 0;
+
+        }
+
+        return response;
+        
+    };
+
+    return {tokenInfo, login, refreshAccessToken, logout};
 });
 

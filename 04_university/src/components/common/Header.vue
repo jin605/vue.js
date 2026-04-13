@@ -33,6 +33,31 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/authStore';
+import { useRouter } from 'vue-router';
+
+    const authStore = useAuthStore();
+    const router = useRouter();
+
+    const logout = async() => {
+        try {
+            if (confirm('정말로 로그아웃하시겠습니까?')) {
+                const response = await authStore.logout();
+
+                if (response.status === 204) {
+                    alert('로그아웃 되었습니다.')
+
+                    router.push({name: 'login'})
+                }
+            }
+
+        } catch(error) {
+            alert('에러가 발생하였습니다.');
+            
+            location.reload();
+        }
+
+    };
 
 </script>
 
