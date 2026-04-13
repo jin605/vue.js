@@ -38,6 +38,41 @@ apiClient.interceptors.request.use(
 
     },
     (error) => {
+        // 비동기 코드에서 에ㅓㄹ를 처리하거나 에러를 즉시 반환할 때 사용한다.
+        return Promise.reject(error);
+    }
+);
+
+// 응답(Response) 인터셉터
+//  - 서버에서 HTTP 응답이 도착한 후에 실행된다.
+apiClient.interceptors.response.use(
+    (response) => response,
+    // 액세스 토큰이 만료되면 액세스 토큰을 재발급 받아서 요청을 다시 시도하도록 구현한다.
+    async (error) => {
+        // 이전 요청에 대한 config 객체를 얻어온다.
+        const originalConfig = error.config;
+
+        console.dir(error);
+
+        // 토큰이 만료되어 401 에러가 발생할 경우
+        if (error.response.status === 401 && !originalConfig._retry) {
+            originalConfig._retry = true;
+            const authStore = useAuthStore();
+
+            try{
+                // 리프레시 토큰을 사용하여 새 엑세스 토큰을 요청한다.
+                await authStore.refreshAccessToken();
+
+                // 원래 요청을 다시 재시도
+                return apiClient(originalConfig)
+            } catch(error) {
+                // 리프레시 토큰도 만료된 경우, 로그아웃 처리
+                authStore.clearState();
+
+                return Promise.reject(error);
+            }
+
+        }
         return Promise.reject(error);
     }
 );
