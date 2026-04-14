@@ -1,6 +1,6 @@
 <template>
     <main>
-        <h2>HOME</h2>
+        <h2>메인 페이지</h2>
 
     </main>
 </template>

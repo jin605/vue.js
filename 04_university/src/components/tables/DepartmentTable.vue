@@ -11,7 +11,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="department in departments" :key="department.no">
+            <tr v-for="department in departments" :key="department.no"
+                @click.stop="emit('itme-click', department.no)">
                 <td>{{ department.no }}</td>
                 <td>{{ department.name }}</td>
                 <td>{{ department.category }}</td>
@@ -32,6 +33,8 @@
             required: true
         }
     });
+
+    const emit = defineEmits(['itme-click'])
 </script>
 
 <style scoped>

@@ -35,6 +35,16 @@ export const useDepartmentStore = defineStore('department', () => {
 
     };
 
-    return {departments, fetchDepartments};
+    const addDepartment = async(department) => {
+        const response = await apiClient.post(
+            '/api/v1/department-service/departments',
+            department
+        );
+
+        return response.data;
+
+    }
+
+    return {departments, fetchDepartments, addDepartment};
 
 });

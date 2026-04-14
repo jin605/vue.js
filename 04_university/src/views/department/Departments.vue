@@ -5,7 +5,8 @@
             <option value="10">10개</option>
             <option value="20">20개</option>
         </select>
-        <DepartmentTable :departments="departmentStore.departments"/>
+        <DepartmentTable :departments="departmentStore.departments"
+        @itme-click="itmeClick"/>
         <Pagination
             :current-page="currentPage"
             :page-numbers="pageNumbers"
@@ -31,6 +32,10 @@
 
             setCurrentPage(page);
         }
+    }
+
+    const itmeClick = () => {
+        router.push({name})
     }
 
     onMounted(async () => {
@@ -84,12 +89,15 @@
 
             setTotalCount(response.totalCount);
         } catch (error) {
-            const {status, message} = error.response.data;         
+
+            const { status, message } = error.response.data;       
             
             if (status === 'DEPARTMENT_NOT_FOUND') {
                 alert(message);
+
             } else if (status === 'REFRESH_TOKEN_INVALID') {
                 router.push({name: 'login'});
+
             } else if (status === 'INTERNAL_SERVER_ERROR') {
                 alert('에러가 발생하였습니다.');
             }
