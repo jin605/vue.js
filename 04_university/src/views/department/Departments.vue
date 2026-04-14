@@ -34,8 +34,8 @@
         }
     }
 
-    const itmeClick = () => {
-        router.push({name})
+    const itmeClick = (no) => {
+        router.push({name: 'departments/no', params: {no}})
     }
 
     onMounted(async () => {

@@ -2,6 +2,7 @@
     <main>
         <h2>학과 상세 조회</h2>
 
+        <!-- 
         <p>{{ currentRoute.fullPath }}</p>
         <p>{{ currentRoute.path }}</p>
         <p>{{ currentRoute.params }}</p>
@@ -9,18 +10,25 @@
         <p>{{ currentRoute.query }}</p>
         <p>{{ currentRoute.query.name }}</p>
         <p>{{ parseInt(currentRoute.query.age)}}</p>
-
+        -->
+        
         <!-- <button @click="() => router.push('/')">홈으로</button> -->
-        <button @click="() => router.push({name: 'home'})">홈으로</button>
+        <!-- <button @click="() => router.push({name: 'home'})">홈으로</button> -->
         <!-- <button @click="() => router.replace({name: 'home'})">홈으로</button> -->
-        <button @click="() => router.back()">뒤로가기</button>
-        <button @click="() => router.forward()">앞으로가기</button>
+        <!-- <button @click="() => router.back()">뒤로가기</button>
+        <button @click="() => router.forward()">앞으로가기</button> -->
 
+        <DepartmentForm
+            :form-type="FORM_TYPE.EDIT"/>
+        
+        
     </main>
 </template>
 
 <script setup>
 import { useRoute, useRouter } from 'vue-router';
+import { FORM_TYPE } from '@/constants/formType';
+import DepartmentForm from '@/components/forms/DepartmentForm.vue';
 
 
 const router = useRouter();
