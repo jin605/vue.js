@@ -38,7 +38,7 @@ import { reactive, toRaw, watch } from 'vue';
 
     const formData = reactive({});
     const props= defineProps({
-        intiFormData: Object,
+        initFormData: Object,
         formType: {
             type: String,
             required: true,
@@ -52,13 +52,13 @@ import { reactive, toRaw, watch } from 'vue';
 
     }
 
-    watch
-    (props.intiFormData,
+    watch(
+    () => props.initFormData,
     (newFormData) => {
-        Object.assign(formData, newFormData);
+        Object.assign(formData, newFormData ?? {});
     },
     {
-        immediate: true // watch가 등록될 때 즉시 한 번 실행한다.
+        immediate: true, deep: true // watch가 등록될 때 즉시 한 번 실행한다.
     }
 
     );

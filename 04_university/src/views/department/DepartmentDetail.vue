@@ -1,26 +1,13 @@
+<!-- 04_university/src/views/department/DepartmentDetail.vue -->
 <template>
     <main>
         <h2>학과 상세 조회</h2>
 
-        <!-- 
-        <p>{{ currentRoute.fullPath }}</p>
-        <p>{{ currentRoute.path }}</p>
-        <p>{{ currentRoute.params }}</p>
-        <p>{{ currentRoute.params.no }}</p>
-        <p>{{ currentRoute.query }}</p>
-        <p>{{ currentRoute.query.name }}</p>
-        <p>{{ parseInt(currentRoute.query.age)}}</p>
-        -->
-        
-        <!-- <button @click="() => router.push('/')">홈으로</button> -->
-        <!-- <button @click="() => router.push({name: 'home'})">홈으로</button> -->
-        <!-- <button @click="() => router.replace({name: 'home'})">홈으로</button> -->
-        <!-- <button @click="() => router.back()">뒤로가기</button>
-        <button @click="() => router.forward()">앞으로가기</button> -->
-
         <DepartmentForm
-            :form-type="FORM_TYPE.EDIT"/>
-        
+
+            :form-type="FORM_TYPE.EDIT"
+            :init-form-data="departmentStore.departments"
+            @form-submit="formSubmit"/>
         
     </main>
 </template>
@@ -29,11 +16,61 @@
 import { useRoute, useRouter } from 'vue-router';
 import { FORM_TYPE } from '@/constants/formType';
 import DepartmentForm from '@/components/forms/DepartmentForm.vue';
-
+import { useDepartmentStore } from '@/stores/departmentStore';
+import { onMounted } from 'vue';
 
 const router = useRouter();
 const currentRoute = useRoute();
+const departmentStore = useDepartmentStore();
 
+const formSubmit = async (formData) => {
+
+    try {
+        const response = 
+            await departmentStore.editDepartment(currentRoute.params.no, formData);
+;
+
+        if (response.code === 200) {
+
+            alert('정상적으로 수정되었습니다.')
+        }
+        
+    } catch (error) {
+
+        const { status, message } = error.response.data;
+
+        if (status === 'DEPARTMENT_NOT_FOUND') {
+            alert(message);
+        } else if (status === 'BAD_REQUEST') {
+            alert('학과 정보를 모두 입력해 주세요.');
+        } else if (status === 'REFRESH_TOKEN_INVALID') {
+            router.push({name: 'login'});
+        } else if (status === 'INTERNAL_SERVER_ERROR') {
+            alert('에러가 발생하였습니다.');
+        }
+        
+    }
+}
+
+onMounted(async() => {
+
+    try {
+        await departmentStore.fetchDepartment(currentRoute.params.no)
+        
+    } catch (error) {
+        
+        const {status, message} = error.response.data;
+
+        if (status === 'DEPARTMENT_NOT_FOUND') {
+            alert(message);
+        } else if (status === 'REFRESH_TOKEN_INVALID') {
+            router.push({name: 'login'});
+        } else if (status === 'INTERNAL_SERVER_ERROR') {
+            alert('에러가 발생하였습니다.');
+        }
+    }
+
+})
 </script>
 
 <style scoped>

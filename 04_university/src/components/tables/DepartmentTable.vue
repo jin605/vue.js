@@ -19,7 +19,9 @@
                 <td>{{ department.openYn }}</td>
                 <td>{{ department.capacity }}</td>
                 <td>
-                    <button type="button" class="btn btn-outline-danger">삭제</button>
+                    <button type="button" class="btn btn-outline-danger"
+                        v-if="autoStore.tokenInfo.authorities.includes('ROLE_ADMIN')"
+                        @click.stop="emit('delete-click',department.no)">삭제</button>
                 </td>
             </tr>
         </tbody>
@@ -27,6 +29,11 @@
 </template>
 
 <script setup>
+import { useAuthStore } from '@/stores/authStore';
+
+
+    const autoStore = useAuthStore();
+    
     const props = defineProps({
         departments: {
             type: Array,
@@ -34,7 +41,7 @@
         }
     });
 
-    const emit = defineEmits(['itme-click'])
+    const emit = defineEmits(['itme-click', 'delete-click'])
 </script>
 
 <style scoped>

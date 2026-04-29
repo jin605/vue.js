@@ -14,6 +14,14 @@ export const useAuthStore = defineStore('auth', () =>{
         expiredAt: 0
     });
 
+    const getFirstTokenInfo = (data) => {
+        const raw = data?.item ?? data?.items;
+
+        if (Array.isArray(raw)) return raw[0] ?? null;
+        if (raw && typeof raw === 'object') return raw;
+        return null;
+    };
+
     // 로그인 처리
     const login = async (formData) => {
         const response = await apiClient.post(
@@ -29,8 +37,8 @@ export const useAuthStore = defineStore('auth', () =>{
         console.log(response);
 
         if (response.status === 200) {
-            // TokenInfo 속성을 response.data.item[0]의 속성으로 변경한다.
-            Object.assign(tokenInfo, response.data.item[0]);
+            const nextTokenInfo = getFirstTokenInfo(response.data);
+            if (nextTokenInfo) Object.assign(tokenInfo, nextTokenInfo);
         }
 
         return response.data;
@@ -48,7 +56,8 @@ export const useAuthStore = defineStore('auth', () =>{
         );
 
         if (response.status === 200) {
-            Object.assign(tokenInfo, response.data.item[0]);
+            const nextTokenInfo = getFirstTokenInfo(response.data);
+            if (nextTokenInfo) Object.assign(tokenInfo, nextTokenInfo);
             
         }
     };

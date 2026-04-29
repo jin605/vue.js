@@ -2,7 +2,7 @@
     <main>
         <DepartmentForm
             :form-type="FORM_TYPE.ADD"
-            :inti-form-data="initFormData"
+            :init-form-data="initFormData"
             @form-submit="formSubmit"/>
     </main>
 
@@ -32,7 +32,7 @@
             if (response.code === 201) {
                 alert('정상적으로 등록되었습니다.')
 
-                router.push({name: 'departments'})
+                router.push({name: 'departments/no', params: {no: response.item[0].no}})
             }
             
         } catch (error) {
